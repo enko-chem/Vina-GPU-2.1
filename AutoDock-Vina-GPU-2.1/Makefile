@@ -1,7 +1,7 @@
 # Define paths (WORK_DIR defaults to the current directory if not specified during make invocation)
 WORK_DIR ?= $(shell pwd)
 BOOST_LIB_PATH ?= /usr/lib/x86_64-linux-gnu
-OPENCL_LIB_PATH := /usr/local/cuda
+OPENCL_LIB_PATH ?= /opt/nvidia/hpc_sdk/Linux_x86_64/24.9/cuda/12.6/targets/x86_64-linux
 
 # Compilation and platform settings
 OPENCL_VERSION := -DOPENCL_2_0
