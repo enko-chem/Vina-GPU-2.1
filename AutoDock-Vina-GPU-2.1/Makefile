@@ -79,7 +79,7 @@ install: $(TARGET) runscript
 	install -m 644 *.bin $(KERNEL_DIR)/
 	install -m 755 $(EXE_NAME) /usr/local/bin/
 
-installsource: source runscript
+srcinstall: $(TARGET) source runscript
 	install -d $(INSTALL_DIR) $(KERNEL_DIR)
 	install -m 755 $(TARGET) $(INSTALL_DIR)/
 	install -m 644 *.bin $(KERNEL_DIR)/
