@@ -21,7 +21,7 @@ CFLAGS += --diag_suppress=deprecated_entity
 
 # Include paths and libraries
 INCLUDE_PATHS := -I$(BOOST_LIB_PATH) -I$(OPENCL_LIB_PATH)/include -I$(WORK_DIR)/lib -I$(WORK_DIR)/OpenCL/inc
-LIBS := -lboost_program_options -lboost_system -lboost_filesystem -lOpenCL -lstdc++ -lstdc++fs -lm -lpthread
+LIBS := -lboost_program_options -lboost_system -lboost_filesystem -lboost_thread -lOpenCL -lstdc++ -lstdc++fs -lm -lpthread
 LIBS += -L$(BOOST_LIB_PATH) -L$(OPENCL_LIB_PATH)/lib
 
 # Source files
