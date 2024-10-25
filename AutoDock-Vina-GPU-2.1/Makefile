@@ -12,11 +12,15 @@ DOCKING_BOX_SIZE := -DSMALL_BOX
 CC := $(CC)       # Defaulting to nvc if set in the environment
 CXX := $(CXX)     # Defaulting to nvc++ if set in the environment
 CFLAGS := -O3 -DNDEBUG $(OPENCL_VERSION) $(GPU_PLATFORM) $(DOCKING_BOX_SIZE) -DBOOST_TIMER_ENABLE_DEPRECATED
-LDFLAGS := -L$(BOOST_LIB_PATH) -L$(OPENCL_LIB_PATH)/lib64
+LDFLAGS := -L$(BOOST_LIB_PATH) -L$(OPENCL_LIB_PATH)/lib
+
+# Supress warning about unused variables
+CFLAS += "--diag_suppress=declared_but_not_referenced"
 
 # Include paths and libraries
-INCLUDE_PATHS := -I$(BOOST_LIB_PATH) -I$(WORK_DIR)/lib -I$(WORK_DIR)/OpenCL/inc
+INCLUDE_PATHS := -I$(BOOST_LIB_PATH) -I$(OPENCL_LIB_PATH)/include -I$(WORK_DIR)/lib -I$(WORK_DIR)/OpenCL/inc
 LIBS := -lboost_program_options -lboost_system -lboost_filesystem -lOpenCL -lstdc++ -lstdc++fs -lm -lpthread
+LIBS += -L$(BOOST_LIB_PATH) -L$(OPENCL_LIB_PATH)/lib
 
 # Source files
 SRC := ./lib/*.cpp ./OpenCL/src/wrapcl.cpp
@@ -29,16 +33,16 @@ all: $(TARGET)
 
 # Build main target
 $(TARGET): ./main/main.cpp $(SRC)
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+        $(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Build option for kernel source
 source: ./main/main.cpp
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
+        $(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
 
 # Debug build option
 debug: ./main/main.cpp
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
+        $(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
 
 # Clean target
 clean:
-	rm -f $(TARGET)
+        rm -f $(TARGET)
