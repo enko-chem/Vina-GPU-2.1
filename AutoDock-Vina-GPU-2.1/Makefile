@@ -72,6 +72,7 @@ debug: ./main/main.cpp
 # Clean target
 clean:
 	rm -f $(TARGET)
+	rm -f Kernel?_Opt.bin
 
 install-with-kernels: $(TARGET) runscript
 	install -d $(INSTALL_DIR) $(KERNEL_DIR)
