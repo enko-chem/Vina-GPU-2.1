@@ -60,7 +60,7 @@ $(TARGET): ./main/main.cpp $(SRC)
 
 # Build option for kernel source
 source: ./main/main.cpp
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) -DBUILD_KERNEL_FROM_SOURCE ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 runscript:
 	echo '$(INSTALL_DIR)/AutoDock-Vina-GPU-2-1 --opencl_binary_path $(KERNEL_DIR) "$$@"' > $(EXE_NAME)
@@ -73,13 +73,13 @@ debug: ./main/main.cpp
 clean:
 	rm -f $(TARGET)
 
-install: $(TARGET) runscript
+install-with-kernels: $(TARGET) runscript
 	install -d $(INSTALL_DIR) $(KERNEL_DIR)
 	install -m 755 $(TARGET) $(INSTALL_DIR)/
 	install -m 644 *.bin $(KERNEL_DIR)/
 	install -m 755 $(EXE_NAME) /usr/local/bin/
 
-srcinstall: $(TARGET) source runscript
+install: source runscript
 	install -d $(INSTALL_DIR) $(KERNEL_DIR)
 	install -m 755 $(TARGET) $(INSTALL_DIR)/
 	install -m 644 *.bin $(KERNEL_DIR)/
