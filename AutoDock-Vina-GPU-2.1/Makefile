@@ -71,6 +71,7 @@ clean:
 
 # Install target using 'install' command
 install: $(TARGET)
-	install -d $(INSTALL_DIR) $(KERNEL_DIR)
+	mkdir -p $INSTALL_DIR
+	mkdir -p $KERNEL_DIR
 	install -m 755 $(TARGET) $(INSTALL_DIR)/
 	install -m 644 ./kernels/*.bin $(KERNEL_DIR)/
