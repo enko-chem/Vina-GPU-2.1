@@ -33,16 +33,16 @@ all: $(TARGET)
 
 # Build main target
 $(TARGET): ./main/main.cpp $(SRC)
-        $(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Build option for kernel source
 source: ./main/main.cpp
-        $(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
 
 # Debug build option
 debug: ./main/main.cpp
-        $(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
 
 # Clean target
 clean:
-        rm -f $(TARGET)
+	rm -f $(TARGET)
