@@ -15,7 +15,7 @@ CFLAGS := -O3 -DNDEBUG $(OPENCL_VERSION) $(GPU_PLATFORM) $(DOCKING_BOX_SIZE) -DB
 LDFLAGS := -L$(BOOST_LIB_PATH) -L$(OPENCL_LIB_PATH)/lib
 
 # Supress warning about unused variables
-CFLAGS += --diag_suppress=declared_but_not_referenced
+CFLAGS += --diag_suppress=declared_but_not_referenced --diag_supress=virtual_function_decl_hidden
 
 # Include paths and libraries
 INCLUDE_PATHS := -I$(BOOST_LIB_PATH) -I$(OPENCL_LIB_PATH)/include -I$(WORK_DIR)/lib -I$(WORK_DIR)/OpenCL/inc
