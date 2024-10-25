@@ -63,7 +63,7 @@ source: ./main/main.cpp
 	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
 
 runscript:
-	echo '$(INSTALL_DIR)/AutoDock-Vina-GPU-2-1 --opencl_binary_path=$(KERNEL_DIR) "$$@"' > $(EXE_NAME)
+	echo '$(INSTALL_DIR)/AutoDock-Vina-GPU-2-1 --opencl_binary_path $(KERNEL_DIR) "$$@"' > $(EXE_NAME)
 
 # Debug build option
 debug: ./main/main.cpp
