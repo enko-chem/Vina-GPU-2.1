@@ -73,8 +73,13 @@ debug: ./main/main.cpp
 clean:
 	rm -f $(TARGET)
 
-# Install target using 'install' command
 install: $(TARGET) runscript
+	install -d $(INSTALL_DIR) $(KERNEL_DIR)
+	install -m 755 $(TARGET) $(INSTALL_DIR)/
+	install -m 644 *.bin $(KERNEL_DIR)/
+	install -m 755 $(EXE_NAME) /usr/local/bin/
+
+installsource: source runscript
 	install -d $(INSTALL_DIR) $(KERNEL_DIR)
 	install -m 755 $(TARGET) $(INSTALL_DIR)/
 	install -m 644 *.bin $(KERNEL_DIR)/
