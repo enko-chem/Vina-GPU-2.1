@@ -34,6 +34,11 @@ CXX := $(CXX)
 CFLAGS := -O3 -DNDEBUG $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
 LDFLAGS := -L$(BOOST_LIB_PATH) -L$(OPENCL_LIB_PATH)/lib
 
+# Supress warning about unused variables
+CFLAGS += --diag_suppress=declared_but_not_referenced
+CFLAGS += --diag_suppress=virtual_function_decl_hidden
+CFLAGS += --diag_suppress=deprecated_entity
+
 # Include paths and libraries
 INCLUDE_PATHS := -I$(BOOST_LIB_PATH) -I$(OPENCL_LIB_PATH)/include -I$(WORK_DIR)/lib -I$(WORK_DIR)/OpenCL/inc
 LIBS := -lboost_program_options -lboost_system -lboost_filesystem -lboost_thread -lOpenCL -lstdc++ -lstdc++fs -lm -lpthread
@@ -59,7 +64,7 @@ source: ./main/main.cpp
 # Debug build option
 debug: ./main/main.cpp
 	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
-	
+
 # Clean target
 clean:
 	rm -f $(TARGET)
