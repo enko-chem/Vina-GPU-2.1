@@ -2,6 +2,7 @@
 WORK_DIR ?= $(shell pwd)
 BOOST_LIB_PATH ?= /usr/lib/x86_64-linux-gnu
 OPENCL_LIB_PATH ?= /opt/nvidia/hpc_sdk/Linux_x86_64/24.9/cuda/12.6/targets/x86_64-linux
+EXE_NAME ?= vina-gpu
 
 # Installation paths
 INSTALL_DIR ?= /opt/AutoDock-Vina-GPU
@@ -61,6 +62,10 @@ $(TARGET): ./main/main.cpp $(SRC)
 source: ./main/main.cpp
 	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
 
+runscript:
+	echo "$(INSTALL_DIR)/AutoDock-Vina-GPU-2-1 --opencl_binary_path=$(KERNEL_DIR) \"$@\"" > \
+	$(EXE_NAME)
+
 # Debug build option
 debug: ./main/main.cpp
 	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS) -DBUILD_KERNEL_FROM_SOURCE
@@ -70,8 +75,8 @@ clean:
 	rm -f $(TARGET)
 
 # Install target using 'install' command
-install: $(TARGET)
-	mkdir -p $(INSTALL_DIR)
-	mkdir -p $(KERNEL_DIR)
+install: $(TARGET) runscript
+	install -d $(INSTALL_DIR) $(KERNEL_DIR)
 	install -m 755 $(TARGET) $(INSTALL_DIR)/
 	install -m 644 *.bin $(KERNEL_DIR)/
+	install -m 755 $(EXE_NAME) /usr/local/bin/
