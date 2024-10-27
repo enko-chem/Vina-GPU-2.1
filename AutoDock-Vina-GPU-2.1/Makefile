@@ -7,18 +7,12 @@ INSTALL_DIR ?= /opt/AutoDock-Vina-GPU
 KERNEL_DIR ?= $(INSTALL_DIR)/kernels
 
 # NVIDIA HPC SDK paths inferred from NVHPC_ROOT
-@echo "The value of NVHPC_ROOT is: $(NVHPC_ROOT)"
-ifeq ($(NVHPC_ROOT), '')
-	NVSDK_ROOT = /usr/local/cuda
-else
-	NVSDK_ROOT := $(NVHPC_ROOT)
-endif
-CUDA_INC_PATH := $(NVSDK_ROOT)/cuda/include
-CUDA_LIB_PATH := $(NVSDK_ROOT)/cuda/lib64
-COMPILER_LIB_PATH := $(NVSDK_ROOT)/compilers/lib
-MATH_LIB_PATH := $(NVSDK_ROOT)/math_libs/lib64
-NCCL_LIB_PATH := $(NVSDK_ROOT)/comm_libs/nccl/lib
-NVSHMEM_LIB_PATH := $(NVSDK_ROOT)/comm_libs/nvshmem/lib
+CUDA_INC_PATH := $(NVHPC_ROOT)/cuda/include
+CUDA_LIB_PATH := $(NVHPC_ROOT)/cuda/lib64
+COMPILER_LIB_PATH := $(NVHPC_ROOT)/compilers/lib
+MATH_LIB_PATH := $(NVHPC_ROOT)/math_libs/lib64
+NCCL_LIB_PATH := $(NVHPC_ROOT)/comm_libs/nccl/lib
+NVSHMEM_LIB_PATH := $(NVHPC_ROOT)/comm_libs/nvshmem/lib
 
 # Compilation and platform settings
 BOX_SIZE ?= small
@@ -92,6 +86,7 @@ $(TARGET): ./main/main.cpp
 
 # Build option for kernel source
 source: ./main/main.cpp
+	@echo "The value of NVHPC_ROOT is: $(NVHPC_ROOT)"
 	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Debug build option
