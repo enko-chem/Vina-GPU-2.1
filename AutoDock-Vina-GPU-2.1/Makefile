@@ -7,6 +7,7 @@ INSTALL_DIR ?= /opt/AutoDock-Vina-GPU
 KERNEL_DIR ?= $(INSTALL_DIR)/kernels
 
 # NVIDIA HPC SDK paths inferred from NVHPC_ROOT
+@echo "The value of NVHPC_ROOT is: $(NVHPC_ROOT)"
 ifeq ($(NVHPC_ROOT), '')
 	NVSDK_ROOT = /usr/local/cuda
 else
@@ -27,7 +28,7 @@ EXTRA_OUTPUT ?= 0
 # Set the BOX_SIZE_FLAG based on the command-line argument (either small or large)
 ifeq ($(BOX_SIZE), small)
 	BOX_SIZE_FLAG := -DSMALL_BOX
-else ifeq($(BOX_SIZE), large)
+else ifeq ($(BOX_SIZE), large)
 	BOX_SIZE_FLAG := -DLARGE_BOX
 else
     $(error Invalid BOX_SIZE specified. Use 'small' or 'large'.)
