@@ -47,7 +47,7 @@ endif
 # Compiler, flags, and linker settings
 CC := $(CC)
 CXX := $(CXX)
-CFLAGS := -O3 -DNDEBUG $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
+CFLAGS := -O3 -DNDEBUG -DNVIDIA_PLATFORM $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
 
 # Add -fPIE if the compiler is nvc or nvc++
 CC_NAME := $(notdir $(CC))
