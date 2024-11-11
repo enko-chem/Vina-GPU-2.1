@@ -39,7 +39,7 @@ endif
 
 # Add EXTRA_OUTPUT flags if specified
 ifeq ($(EXTRA_OUTPUT), 1)
-    EXTRA_FLAGS := -DTIME_ANALYSIS -DDISPLAY_ADDITION_INFO
+    EXTRA_FLAGS := -DTIME_ANALYSIS -DDISPLAY_ADDITION_INFO -DDISPLAY_SUCCESS
 else
     EXTRA_FLAGS :=
 endif
@@ -47,7 +47,7 @@ endif
 # Compiler, flags, and linker settings
 CC := $(CC)
 CXX := $(CXX)
-CFLAGS := -O3 -DNDEBUG $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
+CFLAGS := -O3 -DNDEBUG -DNVIDIA_PLATFORM $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
 
 # Add -fPIE if the compiler is nvc or nvc++
 CC_NAME := $(notdir $(CC))
@@ -91,7 +91,7 @@ source: ./main/main.cpp
 
 # Debug build option
 debug: ./main/main.cpp
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g  -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Clean target
 clean:
