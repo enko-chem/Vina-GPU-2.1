@@ -76,9 +76,9 @@ else
 endif
 
 # Supress warning about unused variables
-CFLAGS += --diag_suppress=declared_but_not_referenced
-CFLAGS += --diag_suppress=virtual_function_decl_hidden
-CFLAGS += --diag_suppress=deprecated_entity
+# CFLAGS += --diag_suppress=declared_but_not_referenced
+# CFLAGS += --diag_suppress=virtual_function_decl_hidden
+# CFLAGS += --diag_suppress=deprecated_entity
 
 LDFLAGS := -L$(BOOST_LIB_PATH) -L$(CUDA_LIB_PATH) -L$(COMPILER_LIB_PATH) -L$(MATH_LIB_PATH) -L$(NCCL_LIB_PATH) -L$(NVSHMEM_LIB_PATH)
 
