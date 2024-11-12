@@ -55,10 +55,10 @@ CXX_NAME := $(notdir $(CXX))
 
 # Conditionally add -fPIE if the compiler is nvc or nvc++
 ifeq ($(CC_NAME),nvc)
-    CC += -fPIC -Xptxas -v #-gpu=rdc -gpu=ccall
+    CC += -fPIC -Xptxas -v -gpu=rdc -gpu=ccall
 endif
 ifeq ($(CXX_NAME),nvc++)
-    CXX += -fPIC -Xptxas -v #-gpu=rdc -gpu=ccall
+    CXX += -fPIC -Xptxas -v -gpu=rdc -gpu=ccall
 endif
 
 # Supress warning about unused variables
