@@ -54,8 +54,23 @@ CC_NAME := $(notdir $(CC))
 CXX_NAME := $(notdir $(CXX))
 
 # Conditionally add NVIDIA compiler flags
-ifeq ($(CC_NAME),nvc)
-    CFLAGS += -DNVIDIA_PLATFORM -fPIC -Xptxas -v -Ofast -static-nvidia
+ifeq ($(CXX_NAME),nvc++)
+	CXX = nvcc
+    CFLAGS += -DNVIDIA_PLATFORM -fPIC -Ofast
+    CFLAGS += --generate-code arch=compute_90,code=compute_90 \
+              --generate-code arch=compute_89,code=compute_89 \
+              --generate-code arch=compute_87,code=compute_87 \
+              --generate-code arch=compute_86,code=compute_86 \
+              --generate-code arch=compute_80,code=compute_80 \
+              --generate-code arch=compute_75,code=compute_75 \
+              --generate-code arch=compute_72,code=compute_72 \
+              --generate-code arch=compute_70,code=compute_70 \
+              --generate-code arch=compute_62,code=compute_62 \
+              --generate-code arch=compute_61,code=compute_61 \
+              --generate-code arch=compute_60,code=compute_60 \
+              --generate-code arch=compute_53,code=compute_53 \
+              --generate-code arch=compute_52,code=compute_52 \
+              --generate-code arch=compute_50,code=compute_50
 else
 	CFLAGS += -O3
 endif
@@ -112,4 +127,4 @@ install: $(TARGET) runscript
 uninstall:
 	rm -rf $(KERNEL_DIR)
 	rm -rf $(INSTALL_DIR)
-	rm -rf /usr/loca/bin/vina-gpu
+	rm -rf /usr/local/bin/vina-gpu
