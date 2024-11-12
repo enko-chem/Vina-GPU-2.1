@@ -55,7 +55,7 @@ CXX_NAME := $(notdir $(CXX))
 
 # Conditionally add NVIDIA compiler flags
 ifeq ($(CC_NAME),nvc)
-    CFLAGS += -DNVIDIA_PLATFORM -acc -Minfo=accel -gpu=cc80,keepbin,managed -Xcompiler -fPIC -Xptxas -v --fatbin
+    CFLAGS += -DNVIDIA_PLATFORM -acc -Minfo=accel -gpu=cc80,keepbin,managed -fPIC -Xptxas -v --fatbin
 else
 	CFLAGS += -O3
 endif
