@@ -55,7 +55,7 @@ CXX_NAME := $(notdir $(CXX))
 
 # Conditionally add NVIDIA compiler flags
 ifeq ($(CC_NAME),nvc)
-    CFLAGS += -DNVIDIA_PLATFORM -acc -Minfo=accel -gpu=cc80,keepbin,managed -Xcompiler -fPIC -Xptxas -v
+    CFLAGS += -DNVIDIA_PLATFORM -acc -Minfo=accel -gpu=cc80,keepbin,managed -Xcompiler -fPIC -Xptxas -v --fatbin
 else
 	CFLAGS += -O3
 endif
@@ -81,16 +81,16 @@ TARGET := AutoDock-Vina-GPU-2-1
 all: $(TARGET)
 
 $(TARGET): ./main/main.cpp
-	$(CC) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Build option for kernel source
 source: ./main/main.cpp
 	@echo "The value of NVHPC_ROOT is: $(NVHPC_ROOT)"
-	$(CC) -o $(TARGET) $(INCLUDE_PATHS) -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Debug build option
 debug: ./main/main.cpp
-	$(CC) -o $(TARGET) $(INCLUDE_PATHS) -g -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Clean target
 clean:
