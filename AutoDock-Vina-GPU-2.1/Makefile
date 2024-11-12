@@ -47,18 +47,17 @@ endif
 # Compiler, flags, and linker settings
 CC := $(CC)
 CXX := $(CXX)
-CFLAGS := -fast -DNDEBUG -DNVIDIA_PLATFORM $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
+CFLAGS := -DNDEBUG $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
 
 # Add -fPIE if the compiler is nvc or nvc++
 CC_NAME := $(notdir $(CC))
 CXX_NAME := $(notdir $(CXX))
 
-# Conditionally add -fPIE if the compiler is nvc or nvc++
+# Conditionally add NVIDIA compiler flags
 ifeq ($(CC_NAME),nvc)
-    CC += -fPIC -Xptxas -v -gpu=rdc -gpu=ccall
-endif
-ifeq ($(CXX_NAME),nvc++)
-    CXX += -fPIC -Xptxas -v -gpu=rdc -gpu=ccall
+    CFLAGS += -DNVIDIA_PLATFORM -acc -Minfo=accel -gpu=cc80,keepbin,managed -Xcompiler -fPIC -Xptxas -v
+else
+	CFLAGS += -O3
 endif
 
 # Supress warning about unused variables
@@ -82,16 +81,16 @@ TARGET := AutoDock-Vina-GPU-2-1
 all: $(TARGET)
 
 $(TARGET): ./main/main.cpp
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CC) -o $(TARGET) $(INCLUDE_PATHS) $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Build option for kernel source
 source: ./main/main.cpp
 	@echo "The value of NVHPC_ROOT is: $(NVHPC_ROOT)"
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CC) -o $(TARGET) $(INCLUDE_PATHS) -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Debug build option
 debug: ./main/main.cpp
-	$(CXX) -o $(TARGET) $(INCLUDE_PATHS) -g -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
+	$(CC) -o $(TARGET) $(INCLUDE_PATHS) -g -DBUILD_KERNEL_FROM_SOURCE $(CFLAGS) ./main/main.cpp $(SRC) $(LIBS) $(LDFLAGS)
 
 # Clean target
 clean:
