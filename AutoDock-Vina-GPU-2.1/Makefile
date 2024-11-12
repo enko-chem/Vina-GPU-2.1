@@ -56,7 +56,7 @@ CXX_NAME := $(notdir $(CXX))
 # Conditionally add NVIDIA compiler flags
 ifeq ($(CXX_NAME),nvc++)
 	CXX = nvcc
-    CFLAGS += -DNVIDIA_PLATFORM -fPIC --use_fast_math
+    CFLAGS += -DNVIDIA_PLATFORM --use_fast_math
     CFLAGS += --generate-code arch=compute_90,code=compute_90 \
               --generate-code arch=compute_89,code=compute_89 \
               --generate-code arch=compute_87,code=compute_87 \
