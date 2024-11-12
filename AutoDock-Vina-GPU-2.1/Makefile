@@ -55,7 +55,7 @@ CXX_NAME := $(notdir $(CXX))
 
 # Conditionally add NVIDIA compiler flags
 ifeq ($(CC_NAME),nvc)
-    CFLAGS += -DNVIDIA_PLATFORM --cuda -fPIC -Xptxas -v -Ofast -static-nvidia
+    CFLAGS += -DNVIDIA_PLATFORM -fPIC -Xptxas -v -Ofast -static-nvidia
 else
 	CFLAGS += -O3
 endif
