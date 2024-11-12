@@ -47,7 +47,7 @@ endif
 # Compiler, flags, and linker settings
 CC := $(CC)
 CXX := $(CXX)
-CFLAGS := -O3 -DNDEBUG -DNVIDIA_PLATFORM $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
+CFLAGS := -fast -DNDEBUG -DNVIDIA_PLATFORM $(BOX_SIZE_FLAG) $(OPENCL_FLAG) $(EXTRA_FLAGS) -DBOOST_TIMER_ENABLE_DEPRECATED
 
 # Add -fPIE if the compiler is nvc or nvc++
 CC_NAME := $(notdir $(CC))
@@ -55,10 +55,10 @@ CXX_NAME := $(notdir $(CXX))
 
 # Conditionally add -fPIE if the compiler is nvc or nvc++
 ifeq ($(CC_NAME),nvc)
-    CC += -fPIE
+    CC += -Xptxas -gpu=rdc -gpu=ccall
 endif
 ifeq ($(CXX_NAME),nvc++)
-    CXX += -fPIE
+    CXX += -Xptxas -gpu=rdc -gpu=ccall
 endif
 
 # Supress warning about unused variables
